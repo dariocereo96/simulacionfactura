@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="facturas" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.Clientes" Member="Clientes">
+    <Type Name="Clientes">
+      <Column Name="ClienteID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Cedula" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Direccion" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Telefono" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Clientes_Facturas" Member="Facturas" ThisKey="ClienteID" OtherKey="ClienteID" Type="Facturas" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetalleFactura" Member="DetalleFactura">
+    <Type Name="DetalleFactura">
+      <Column Name="DetalleID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FacturaID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProductoID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Cantidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PrecioUnitario" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Subtotal" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Facturas_DetalleFactura" Member="Facturas" ThisKey="FacturaID" OtherKey="FacturaID" Type="Facturas" IsForeignKey="true" />
+      <Association Name="Productos_DetalleFactura" Member="Productos" ThisKey="ProductoID" OtherKey="ProductoID" Type="Productos" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Facturas" Member="Facturas">
+    <Type Name="Facturas">
+      <Column Name="FacturaID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClienteID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UsuarioID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Subtotal" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="IVA" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalConIVA" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Facturas_DetalleFactura" Member="DetalleFactura" ThisKey="FacturaID" OtherKey="FacturaID" Type="DetalleFactura" />
+      <Association Name="Clientes_Facturas" Member="Clientes" ThisKey="ClienteID" OtherKey="ClienteID" Type="Clientes" IsForeignKey="true" />
+      <Association Name="Usuarios_Facturas" Member="Usuarios" ThisKey="UsuarioID" OtherKey="UsuarioID" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuarios" Member="Usuarios">
+    <Type Name="Usuarios">
+      <Column Name="UsuarioID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NombreUsuario" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Contraseña" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Usuarios_Facturas" Member="Facturas" ThisKey="UsuarioID" OtherKey="UsuarioID" Type="Facturas" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Productos" Member="Productos">
+    <Type Name="Productos">
+      <Column Name="ProductoID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Precio" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Stock" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Imagen" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Productos_DetalleFactura" Member="DetalleFactura" ThisKey="ProductoID" OtherKey="ProductoID" Type="DetalleFactura" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,167 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="AppWeb.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        .nav-link:hover {
+            background-color: #399aeb;
+        }
+    </style>
+
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <div class="bg-dark">
+            <!-- Barra de navegación superior -->
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+                <div class="">
+                    <a class="navbar-brand p-4" runat="server" href="~/">FACTURACION</a>
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="row">
+                <!-- Menú lateral -->
+                <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-dark sidebar" style="height: 100vh">
+                    <div class="mt-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ListarClientes">Clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ListarProductos">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ListaFacturas">Facturas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ListarUsuarios">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ReporteFacturas">Reportes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/CorreoEnvio">Email</a>
+                            </li>
+                            <li class="nav-item">
+                                <asp:LinkButton ID="LinkButtonCerrarSesion" runat="server" CssClass="nav-link text-light px-4 py-3" OnClick="LinkButtonCerrarSesion_Click">
+                                    Cerrar sesión
+                                </asp:LinkButton>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- Contenido principal -->
+                <main class="col-sm-9 ms-sm-auto col-lg-10 px-md-4 bg-white">
+                    <div class="container body-content">
+                        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                        </asp:ContentPlaceHolder>
+                        <hr />
+                        <footer>
+                            <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
+                        </footer>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </form>
+    <script>
+        function validarTexto(input) {
+            var regex = /[^a-zA-Z\s]/g;
+            input.value = input.value.replace(regex, '');
+        }
+
+        function validarNumeroDocumento(input) {
+
+            input.value = input.value.replace(/[^0-9]/g, '');
+
+            if (input.value.length > 10) {
+                input.value = input.value.slice(0, 10);
+            }
+        }
+
+        function validarTelefono(input) {
+            input.value = input.value.replace(/[^0-9]/g, '');
+
+            if (input.value.length > 10) {
+                input.value = input.value.slice(0, 10);
+            }
+        }
+
+        function validarPrecio(input) {
+
+            var regex = /^\d*,?\d{0,2}$/;
+            if (!regex.test(input.value)) {
+                input.value = input.value.slice(0, -1);
+            }
+        }
+
+        function previewImage(event) {
+            var fileUpload = event.target;
+            var file = fileUpload.files[0];
+            var preview = document.getElementById('MainContent_imagePreview');
+
+
+            // Verifica que el archivo sea una imagen
+            var validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!validImageTypes.includes(file.type)) {
+                alert("Por favor, seleccione un archivo de imagen válido (JPEG, PNG, GIF).");
+                fileUpload.value = ''; // Resetea el valor del FileUpload
+                preview.style.display = 'none';
+                return;
+            }
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+
+    </script>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+</body>
+</html>
