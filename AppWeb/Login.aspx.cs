@@ -28,6 +28,12 @@ namespace AppWeb
             {
                 // Autenticación exitosa, guardar información de sesión y redireccionar
                 Session["Usuario"] = usuario;
+
+                if (usuario.Rol.Trim().Equals("cliente")){
+                    Response.Redirect("ListaFacturas.aspx");
+                    return;
+                }
+
                 Response.Redirect("ListarClientes.aspx");
             }
             else

@@ -45,7 +45,10 @@ namespace ServicioFactura
                         Direccion = cli.Direccion,
                         Email = cli.Email,
                         Nombre = cli.Nombre,
+                        Apellido = cli.Apellido,
                         Telefono = cli.Telefono,
+                        Estado = cli.Estado,
+                        UsuarioID = cli.UsuarioID,
                     }).ToList();
 
         }
@@ -64,7 +67,10 @@ namespace ServicioFactura
                 ClienteID = cliente.ClienteID,
                 Direccion = cliente.Direccion,
                 Email = cliente.Email,
-                Telefono = cliente.Telefono
+                Telefono = cliente.Telefono,
+                UsuarioID = cliente.UsuarioID,
+                Estado = cliente.Estado,
+                Apellido = cliente.Apellido
             };
         }
 
@@ -89,6 +95,7 @@ namespace ServicioFactura
                 clienteBusqueda.Direccion = cliente.Direccion;
                 clienteBusqueda.Telefono = cliente.Telefono;
                 clienteBusqueda.Email = cliente.Email;
+                clienteBusqueda.Apellido = cliente.Apellido;
                 db.SubmitChanges();
             }
 
@@ -105,6 +112,19 @@ namespace ServicioFactura
             {
                 db.Clientes.DeleteOnSubmit(clienteBusqueda);
                 db.SubmitChanges();
+            }
+        
+        }
+
+        [WebMethod]
+        public void ActualizarEstado(int id, string estado)
+        {
+            var existingCliente = db.Clientes.SingleOrDefault(c => c.ClienteID == id);
+
+            if (existingCliente != null)
+            {
+                existingCliente.Estado = estado;
+                db.SubmitChanges(); // Guarda los cambios en la base de datos
             }
         }
 
@@ -328,13 +348,18 @@ namespace ServicioFactura
                     }).ToList();
         }
 
-        //Metodo Usuarios
-
+        // Metodo Usuarios
         [WebMethod]
-        public void InsertUsuario(Usuarios usuario)
+        public int InsertUsuario(Usuarios usuario)
         {
+            // Insertar el nuevo usuario en la base de datos
             db.Usuarios.InsertOnSubmit(usuario);
+
+            // Confirmar los cambios en la base de datos
             db.SubmitChanges();
+
+            // Devolver el ID generado
+            return usuario.UsuarioID;  // Asegúrate de que UsuarioID es el nombre del campo ID en tu clase
         }
 
         [WebMethod]
@@ -352,7 +377,8 @@ namespace ServicioFactura
                 Contraseña = usuarioBusqueda.Contraseña,
                 Nombre = usuarioBusqueda.Nombre,
                 Email = usuarioBusqueda.Email,
-                NombreUsuario = usuarioBusqueda.NombreUsuario
+                NombreUsuario = usuarioBusqueda.NombreUsuario,
+                Rol = usuarioBusqueda.Rol,
             };
            
         }
@@ -372,7 +398,8 @@ namespace ServicioFactura
                         Email = usuario.Email,
                         Nombre = usuario.Nombre,
                         NombreUsuario = usuario.NombreUsuario,
-                        UsuarioID = usuario.UsuarioID
+                        UsuarioID = usuario.UsuarioID,
+                        Rol =usuario.Rol,
                     }).ToList();
         }
 
@@ -427,7 +454,8 @@ namespace ServicioFactura
                     Email = usuario.Email,
                     Nombre = usuario.Nombre,
                     NombreUsuario = usuario.NombreUsuario,
-                    UsuarioID = usuario.UsuarioID   
+                    UsuarioID = usuario.UsuarioID,
+                    Rol = usuario.Rol,
                 };
             }
             return null;

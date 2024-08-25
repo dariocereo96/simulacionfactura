@@ -64,22 +64,22 @@
                     <div class="mt-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ListarClientes">Clientes</a>
+                                <asp:HyperLink ID="HyperLinkClientes" runat="server" CssClass="nav-link text-light px-4 py-3" NavigateUrl="~/ListarClientes">Clientes</asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ListarProductos">Productos</a>
+                                <asp:HyperLink ID="HyperLinkProductos" runat="server" CssClass="nav-link text-light px-4 py-3" NavigateUrl="~/ListarProductos">Productos</asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ListaFacturas">Facturas</a>
+                                <asp:HyperLink ID="HyperLinkFacturas" runat="server" CssClass="nav-link text-light px-4 py-3" NavigateUrl="~/ListaFacturas">Facturas</asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ListarUsuarios">Usuarios</a>
+                                <asp:HyperLink ID="HyperLinkUsuarios" runat="server" CssClass="nav-link text-light px-4 py-3" NavigateUrl="~/ListarUsuarios">Usuarios</asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/ReporteFacturas">Reportes</a>
+                                <asp:HyperLink ID="HyperLinkReportes" runat="server" CssClass="nav-link text-light px-4 py-3" NavigateUrl="~/ReporteFacturas">Reportes</asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light px-4 py-3" runat="server" href="~/CorreoEnvio">Email</a>
+                                <asp:HyperLink ID="HyperLinkEmail" runat="server" CssClass="nav-link text-light px-4 py-3" NavigateUrl="~/CorreoEnvio">Email</asp:HyperLink>
                             </li>
                             <li class="nav-item">
                                 <asp:LinkButton ID="LinkButtonCerrarSesion" runat="server" CssClass="nav-link text-light px-4 py-3" OnClick="LinkButtonCerrarSesion_Click">
@@ -93,6 +93,7 @@
                 <!-- Contenido principal -->
                 <main class="col-sm-9 ms-sm-auto col-lg-10 px-md-4 bg-white">
                     <div class="container body-content">
+                        <asp:Label ID="lblUsuario" CssClass="d-block" runat="server"></asp:Label>
                         <asp:ContentPlaceHolder ID="MainContent" runat="server">
                         </asp:ContentPlaceHolder>
                         <hr />
@@ -134,6 +135,28 @@
                 input.value = input.value.slice(0, -1);
             }
         }
+
+        function validarArchivoPDF(event) {
+            var fileUpload = event.target;
+
+            var file = fileUpload.files[0];
+
+            // Verificar el tamaño del pdf (1 MB = 1024KB * 1024 bytes)
+            if (file.size > 5120 * 1024) {
+                alert('EL ARCHIVO DEBE PESAR MENOS DE 5 MB.');
+                fileUpload.value = "";
+                return false;
+            }
+
+            // Verifica que el archivo sea un PDF
+            var validImageTypes = ['application/pdf'];
+            if (!validImageTypes.includes(file.type)) {
+                alert("POR FAVOR, SELECCIONE UN ARCHIVO PDF VALIDO");
+                fileUpload.value = ''; // Resetea el valor del FileUpload
+                return false;
+            }
+        }
+
 
         function previewImage(event) {
             var fileUpload = event.target;

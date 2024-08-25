@@ -14,7 +14,12 @@ namespace AppWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                // Asignar los roles al DropDownList
+                ddlRol.Items.Add(new ListItem("Administrador", "administrador"));
+                ddlRol.Items.Add(new ListItem("Vendedor", "vendedor"));
+            }
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
@@ -26,7 +31,8 @@ namespace AppWeb
                 Contraseña = EncriptarContraseña(txtContrasena.Text.Trim()),
                 Nombre = txtNombre.Text.Trim(),
                 Apellido = txtApellido.Text.Trim(),
-                Email = txtEmail.Text.Trim()
+                Email = txtEmail.Text.Trim(),
+                Rol = ddlRol.SelectedValue,
             };
 
             // Llamar al servicio para insertar el nuevo usuario

@@ -16,6 +16,10 @@
                 <asp:Label ID="lblContrasena" runat="server" Text="Contraseña" CssClass="form-label"></asp:Label>
                 <asp:TextBox ID="txtContrasena" runat="server" CssClass="form-control" TextMode="Password" required="required"></asp:TextBox>
             </div>
+            <div class="form-group mt-2">
+                <asp:Label ID="lblRol" runat="server" Text="Rol" CssClass="form-label"></asp:Label>
+                <asp:DropDownList runat="server" CssClass="form-control" ID="ddlRol"></asp:DropDownList>
+            </div>
             <div class="form-group mt-2 ">
                 <asp:Label ID="lblNombre" oninput="validarTexto(this)" runat="server" Text="Nombre" CssClass="form-label"></asp:Label>
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" required="required"></asp:TextBox>

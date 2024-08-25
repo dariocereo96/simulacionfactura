@@ -39,6 +39,14 @@ namespace AppWeb.ServiceReference1 {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailField;
         
+        private System.Nullable<int> UsuarioIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EstadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ApellidoField;
+        
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AppWeb.ServiceReference1.Facturas[] FacturasField;
         
@@ -130,7 +138,46 @@ namespace AppWeb.ServiceReference1 {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
+        public System.Nullable<int> UsuarioID {
+            get {
+                return this.UsuarioIDField;
+            }
+            set {
+                if ((this.UsuarioIDField.Equals(value) != true)) {
+                    this.UsuarioIDField = value;
+                    this.RaisePropertyChanged("UsuarioID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
+        public string Estado {
+            get {
+                return this.EstadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EstadoField, value) != true)) {
+                    this.EstadoField = value;
+                    this.RaisePropertyChanged("Estado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
+        public string Apellido {
+            get {
+                return this.ApellidoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ApellidoField, value) != true)) {
+                    this.ApellidoField = value;
+                    this.RaisePropertyChanged("Apellido");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
         public AppWeb.ServiceReference1.Facturas[] Facturas {
             get {
                 return this.FacturasField;
@@ -180,10 +227,10 @@ namespace AppWeb.ServiceReference1 {
         private AppWeb.ServiceReference1.DetalleFactura[] DetalleFacturaField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AppWeb.ServiceReference1.Clientes ClientesField;
+        private AppWeb.ServiceReference1.Usuarios UsuariosField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AppWeb.ServiceReference1.Usuarios UsuariosField;
+        private AppWeb.ServiceReference1.Clientes ClientesField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -300,19 +347,6 @@ namespace AppWeb.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
-        public AppWeb.ServiceReference1.Clientes Clientes {
-            get {
-                return this.ClientesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientesField, value) != true)) {
-                    this.ClientesField = value;
-                    this.RaisePropertyChanged("Clientes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
         public AppWeb.ServiceReference1.Usuarios Usuarios {
             get {
                 return this.UsuariosField;
@@ -321,6 +355,19 @@ namespace AppWeb.ServiceReference1 {
                 if ((object.ReferenceEquals(this.UsuariosField, value) != true)) {
                     this.UsuariosField = value;
                     this.RaisePropertyChanged("Usuarios");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
+        public AppWeb.ServiceReference1.Clientes Clientes {
+            get {
+                return this.ClientesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientesField, value) != true)) {
+                    this.ClientesField = value;
+                    this.RaisePropertyChanged("Clientes");
                 }
             }
         }
@@ -360,6 +407,9 @@ namespace AppWeb.ServiceReference1 {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RolField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AppWeb.ServiceReference1.Facturas[] FacturasField;
@@ -453,6 +503,19 @@ namespace AppWeb.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
+        public string Rol {
+            get {
+                return this.RolField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RolField, value) != true)) {
+                    this.RolField = value;
+                    this.RaisePropertyChanged("Rol");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
         public AppWeb.ServiceReference1.Facturas[] Facturas {
             get {
                 return this.FacturasField;
@@ -937,6 +1000,13 @@ namespace AppWeb.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteCliente", ReplyAction="*")]
         System.Threading.Tasks.Task DeleteClienteAsync(int idCliente);
         
+        // CODEGEN: Se está generando un contrato de mensaje, ya que el nombre de elemento estado del espacio de nombres http://tempuri.org/ no está marcado para aceptar valores nil.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ActualizarEstado", ReplyAction="*")]
+        AppWeb.ServiceReference1.ActualizarEstadoResponse ActualizarEstado(AppWeb.ServiceReference1.ActualizarEstadoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ActualizarEstado", ReplyAction="*")]
+        System.Threading.Tasks.Task<AppWeb.ServiceReference1.ActualizarEstadoResponse> ActualizarEstadoAsync(AppWeb.ServiceReference1.ActualizarEstadoRequest request);
+        
         // CODEGEN: Se está generando un contrato de mensaje, ya que el nombre de elemento ListarProductosResult del espacio de nombres http://tempuri.org/ no está marcado para aceptar valores nil.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ListarProductos", ReplyAction="*")]
         AppWeb.ServiceReference1.ListarProductosResponse ListarProductos(AppWeb.ServiceReference1.ListarProductosRequest request);
@@ -1302,6 +1372,71 @@ namespace AppWeb.ServiceReference1 {
     public partial class UpdateClienteResponseBody {
         
         public UpdateClienteResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ActualizarEstadoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ActualizarEstado", Namespace="http://tempuri.org/", Order=0)]
+        public AppWeb.ServiceReference1.ActualizarEstadoRequestBody Body;
+        
+        public ActualizarEstadoRequest() {
+        }
+        
+        public ActualizarEstadoRequest(AppWeb.ServiceReference1.ActualizarEstadoRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class ActualizarEstadoRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int id;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string estado;
+        
+        public ActualizarEstadoRequestBody() {
+        }
+        
+        public ActualizarEstadoRequestBody(int id, string estado) {
+            this.id = id;
+            this.estado = estado;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ActualizarEstadoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ActualizarEstadoResponse", Namespace="http://tempuri.org/", Order=0)]
+        public AppWeb.ServiceReference1.ActualizarEstadoResponseBody Body;
+        
+        public ActualizarEstadoResponse() {
+        }
+        
+        public ActualizarEstadoResponse(AppWeb.ServiceReference1.ActualizarEstadoResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class ActualizarEstadoResponseBody {
+        
+        public ActualizarEstadoResponseBody() {
         }
     }
     
@@ -1933,10 +2068,17 @@ namespace AppWeb.ServiceReference1 {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
     public partial class InsertUsuarioResponseBody {
         
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int InsertUsuarioResult;
+        
         public InsertUsuarioResponseBody() {
+        }
+        
+        public InsertUsuarioResponseBody(int InsertUsuarioResult) {
+            this.InsertUsuarioResult = InsertUsuarioResult;
         }
     }
     
@@ -2334,6 +2476,32 @@ namespace AppWeb.ServiceReference1 {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        AppWeb.ServiceReference1.ActualizarEstadoResponse AppWeb.ServiceReference1.WebService1Soap.ActualizarEstado(AppWeb.ServiceReference1.ActualizarEstadoRequest request) {
+            return base.Channel.ActualizarEstado(request);
+        }
+        
+        public void ActualizarEstado(int id, string estado) {
+            AppWeb.ServiceReference1.ActualizarEstadoRequest inValue = new AppWeb.ServiceReference1.ActualizarEstadoRequest();
+            inValue.Body = new AppWeb.ServiceReference1.ActualizarEstadoRequestBody();
+            inValue.Body.id = id;
+            inValue.Body.estado = estado;
+            AppWeb.ServiceReference1.ActualizarEstadoResponse retVal = ((AppWeb.ServiceReference1.WebService1Soap)(this)).ActualizarEstado(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<AppWeb.ServiceReference1.ActualizarEstadoResponse> AppWeb.ServiceReference1.WebService1Soap.ActualizarEstadoAsync(AppWeb.ServiceReference1.ActualizarEstadoRequest request) {
+            return base.Channel.ActualizarEstadoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AppWeb.ServiceReference1.ActualizarEstadoResponse> ActualizarEstadoAsync(int id, string estado) {
+            AppWeb.ServiceReference1.ActualizarEstadoRequest inValue = new AppWeb.ServiceReference1.ActualizarEstadoRequest();
+            inValue.Body = new AppWeb.ServiceReference1.ActualizarEstadoRequestBody();
+            inValue.Body.id = id;
+            inValue.Body.estado = estado;
+            return ((AppWeb.ServiceReference1.WebService1Soap)(this)).ActualizarEstadoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         AppWeb.ServiceReference1.ListarProductosResponse AppWeb.ServiceReference1.WebService1Soap.ListarProductos(AppWeb.ServiceReference1.ListarProductosRequest request) {
             return base.Channel.ListarProductos(request);
         }
@@ -2572,11 +2740,12 @@ namespace AppWeb.ServiceReference1 {
             return base.Channel.InsertUsuario(request);
         }
         
-        public void InsertUsuario(AppWeb.ServiceReference1.Usuarios usuario) {
+        public int InsertUsuario(AppWeb.ServiceReference1.Usuarios usuario) {
             AppWeb.ServiceReference1.InsertUsuarioRequest inValue = new AppWeb.ServiceReference1.InsertUsuarioRequest();
             inValue.Body = new AppWeb.ServiceReference1.InsertUsuarioRequestBody();
             inValue.Body.usuario = usuario;
             AppWeb.ServiceReference1.InsertUsuarioResponse retVal = ((AppWeb.ServiceReference1.WebService1Soap)(this)).InsertUsuario(inValue);
+            return retVal.Body.InsertUsuarioResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

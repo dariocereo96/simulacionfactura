@@ -25,6 +25,9 @@
           <s:element minOccurs="0" maxOccurs="1" name="Direccion" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Telefono" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UsuarioID" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Apellido" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Facturas" type="tns:ArrayOfFacturas" />
         </s:sequence>
       </s:complexType>
@@ -43,8 +46,8 @@
           <s:element minOccurs="1" maxOccurs="1" name="IVA" type="s:decimal" />
           <s:element minOccurs="1" maxOccurs="1" name="TotalConIVA" type="s:decimal" />
           <s:element minOccurs="0" maxOccurs="1" name="DetalleFactura" type="tns:ArrayOfDetalleFactura" />
-          <s:element minOccurs="0" maxOccurs="1" name="Clientes" type="tns:Clientes" />
           <s:element minOccurs="0" maxOccurs="1" name="Usuarios" type="tns:Usuarios" />
+          <s:element minOccurs="0" maxOccurs="1" name="Clientes" type="tns:Clientes" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="ArrayOfDetalleFactura">
@@ -83,6 +86,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Apellido" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Rol" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Facturas" type="tns:ArrayOfFacturas" />
         </s:sequence>
       </s:complexType>
@@ -128,6 +132,17 @@
         </s:complexType>
       </s:element>
       <s:element name="DeleteClienteResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ActualizarEstado">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="estado" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActualizarEstadoResponse">
         <s:complexType />
       </s:element>
       <s:element name="ListarProductos">
@@ -282,7 +297,11 @@
         </s:complexType>
       </s:element>
       <s:element name="InsertUsuarioResponse">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InsertUsuarioResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="GetUsuario">
         <s:complexType>
@@ -379,6 +398,12 @@
   </wsdl:message>
   <wsdl:message name="DeleteClienteSoapOut">
     <wsdl:part name="parameters" element="tns:DeleteClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ActualizarEstadoSoapIn">
+    <wsdl:part name="parameters" element="tns:ActualizarEstado" />
+  </wsdl:message>
+  <wsdl:message name="ActualizarEstadoSoapOut">
+    <wsdl:part name="parameters" element="tns:ActualizarEstadoResponse" />
   </wsdl:message>
   <wsdl:message name="ListarProductosSoapIn">
     <wsdl:part name="parameters" element="tns:ListarProductos" />
@@ -503,6 +528,10 @@
       <wsdl:input message="tns:DeleteClienteSoapIn" />
       <wsdl:output message="tns:DeleteClienteSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="ActualizarEstado">
+      <wsdl:input message="tns:ActualizarEstadoSoapIn" />
+      <wsdl:output message="tns:ActualizarEstadoSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ListarProductos">
       <wsdl:input message="tns:ListarProductosSoapIn" />
       <wsdl:output message="tns:ListarProductosSoapOut" />
@@ -612,6 +641,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteCliente">
       <soap:operation soapAction="http://tempuri.org/DeleteCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstado">
+      <soap:operation soapAction="http://tempuri.org/ActualizarEstado" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -813,6 +851,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteCliente">
       <soap12:operation soapAction="http://tempuri.org/DeleteCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstado">
+      <soap12:operation soapAction="http://tempuri.org/ActualizarEstado" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

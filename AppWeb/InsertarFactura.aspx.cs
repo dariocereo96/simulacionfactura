@@ -33,10 +33,30 @@ namespace AppWeb
         private void CargarClientes()
         {
             ServiceReference1.WebService1SoapClient servicio = new ServiceReference1.WebService1SoapClient();
-            ddlClientes.DataSource = servicio.ListaClientes();  // Método que devuelve la lista de clientes
-            ddlClientes.DataTextField = "Nombre";
-            ddlClientes.DataValueField = "ClienteID";
-            ddlClientes.DataBind();
+
+            // Método que devuelve la lista de clientes activos
+            var clientes = servicio.ListaClientes().Where(cli => cli.Estado.Trim().Equals("activo")).ToList();
+
+            
+            if (clientes.Count > 0)
+            {
+                // Crear una lista temporal para mostrar el nombre completo
+                var clientesConNombreCompleto = clientes.Select(c => new
+                {
+                    ClienteID = c.ClienteID,
+                    NombreCompleto = c.Nombre + " " + c.Apellido
+                }).ToList();
+
+                ddlClientes.DataSource = clientesConNombreCompleto;
+                ddlClientes.DataTextField = "NombreCompleto";
+                ddlClientes.DataValueField = "ClienteID";
+                ddlClientes.DataBind();
+            }
+            else
+            {
+                ddlClientes.Items.Insert(0, new ListItem("-- NO HAY REGISTRO -- ", "0"));
+            }
+
         }
 
         private void CargarProductos()
@@ -89,6 +109,12 @@ namespace AppWeb
 
             try { 
                 int clienteID = int.Parse(ddlClientes.SelectedValue);
+
+                if(clienteID <= 0)
+                {
+                    lblMensaje2.Text = "* Seleccione un cliente";
+                    return;
+                }
 
                 Facturas factura = new Facturas
                 {

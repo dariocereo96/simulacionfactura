@@ -9,6 +9,10 @@
                 <asp:TextBox Required="true" oninput="validarTexto(this)" ID="txtNombre" runat="server" CssClass="form-control" />
             </div>
             <div class="form-group mt-2">
+                <label for="txtApellido">Apellido</label>
+                <asp:TextBox Required="true" oninput="validarTexto(this)" ID="txtApellido" runat="server" CssClass="form-control" />
+            </div>
+            <div class="form-group mt-2">
                 <label for="txtCedula">Cédula</label>
                 <asp:TextBox Required="true" oninput="validarNumeroDocumento(this)" ID="txtCedula" runat="server" CssClass="form-control" />
             </div>

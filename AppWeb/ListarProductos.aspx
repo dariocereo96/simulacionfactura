@@ -3,7 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container mt-4">
         <h2 class="mb-4" style="font-size: 20px">Listar Productos</h2>
-        <a href="InsertarProducto.aspx" class="btn btn-primary">Insertar Nuevo Producto</a>
+        <a href="InsertarProducto" class="btn btn-primary">Insertar Nuevo Producto</a>
+        <a href="ReporteProductos" class="btn btn-warning">Reporte de productos</a>
         <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="False" DataKeyNames="ProductoID" CssClass="table table-bordered mt-4" Style="font-size: 14px">
             <Columns>
                 <asp:BoundField DataField="ProductoID" HeaderText="ID" ReadOnly="True" />

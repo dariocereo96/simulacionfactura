@@ -21,7 +21,7 @@
 
                 <div class="mb-3 mt-2">
                     <label for="fuArchivo" class="form-label">Archivo PDF</label>
-                    <asp:FileUpload ID="fuArchivo" Required="true" runat="server" CssClass="form-control" />
+                    <asp:FileUpload ID="fuArchivo" onchange="validarArchivoPDF(event)" Required="true" runat="server" CssClass="form-control" />
                 </div>
                 
                 <div>

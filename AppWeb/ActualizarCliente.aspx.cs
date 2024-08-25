@@ -35,6 +35,7 @@ namespace AppWeb
                     txtCedula.Text = cliente.Cedula;
                     txtDireccion.Text = cliente.Direccion;
                     txtTelefono.Text = cliente.Telefono;
+                    txtApellido.Text = cliente.Apellido;
                 }
                 else
                 {
@@ -63,6 +64,7 @@ namespace AppWeb
                     Direccion = txtDireccion.Text.Trim(),
                     Email = txtEmail.Text.Trim(),
                     Nombre = txtNombre.Text.Trim(),
+                    Apellido = txtApellido.Text.Trim(),
                 };
 
                 servicio.UpdateCliente(cliente);

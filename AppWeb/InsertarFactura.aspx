@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container mt-4" style="width: 900px; margin: auto">
         <h2 style="font-size: 18px; margin-top: 6px; margin-bottom: 10px">Insertar Factura</h2>
-
+        <asp:Label runat="server" ID="lblMensaje2" CssClass="text-danger" Style="font-size: 12px; padding: 6px"></asp:Label>
         <!-- Selección de Cliente -->
         <div class="form-group row">
             <label for="ddlClientes" class="fw-bold">CLIENTE</label>

@@ -1,5 +1,4 @@
 ﻿using AppWeb.ServiceReference1;
-using ServicioFactura;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +14,55 @@ namespace AppWeb
         {
             if (!IsPostBack)
             {
-                CargarFacturas();
+                Usuarios usuario = (Usuarios)Session["usuario"];
+
+                if (usuario.Rol.Trim().Equals("vendedor"))
+                {
+                    HyperLinkFactura.Visible = true;
+                    CargarFacturas();
+                }
+                else if (usuario.Rol.Trim().Equals("cliente"))
+                {
+                    CargarFacturasCliente();
+                }
+                else
+                {
+                    CargarFacturas();
+                }
             }
+        }
+
+        private void CargarFacturasCliente()
+        {
+
+            ServiceReference1.WebService1SoapClient servicio = new ServiceReference1.WebService1SoapClient();
+            Usuarios usuario = (Usuarios)Session["usuario"];
+            Clientes cliente = servicio.ListaClientes().Where(cli => cli.UsuarioID == usuario.UsuarioID).SingleOrDefault();
+
+            if (cliente != null) {
+
+                var facturas = servicio.GetFacturas(); // Obtener todas las facturas
+
+
+                var lista = (from f in facturas
+                             where f.ClienteID == cliente.ClienteID
+                             select new
+                             {
+                                 FacturaID = f.FacturaID,
+                                 ClienteID = f.ClienteID,
+                                 Fecha = f.Fecha,
+                                 Subtotal = f.Subtotal,
+                                 IVA = f.IVA,
+                                 TotalConIVA = f.TotalConIVA,
+                                 ClienteNombre = servicio.ObtenerClienteID((int)f.ClienteID).Nombre + " " + servicio.ObtenerClienteID((int)f.ClienteID).Apellido,
+                                 Cedula = servicio.ObtenerClienteID((int)f.ClienteID).Cedula
+                             }).ToList();
+
+                lista.OrderByDescending(f => f.Fecha);
+                gvFacturas.DataSource = lista;
+                gvFacturas.DataBind();
+            }
+
         }
 
         private void CargarFacturas()
@@ -33,10 +79,11 @@ namespace AppWeb
                              Subtotal = f.Subtotal,
                              IVA = f.IVA,
                              TotalConIVA = f.TotalConIVA,
-                             ClienteNombre = servicio.ObtenerClienteID((int)f.ClienteID).Nombre,
+                             ClienteNombre = servicio.ObtenerClienteID((int)f.ClienteID).Nombre + " " + servicio.ObtenerClienteID((int)f.ClienteID).Apellido,
+                             Cedula = servicio.ObtenerClienteID((int)f.ClienteID).Cedula
                          }).ToList();
 
-            lista.OrderByDescending(f => f.FacturaID);
+            lista.OrderByDescending(f => f.Fecha);
             gvFacturas.DataSource = lista;
             gvFacturas.DataBind();
         }
@@ -58,6 +105,30 @@ namespace AppWeb
             catch (Exception ex)
             {
                 Response.Write("Error: " + ex.Message);
+            }
+        }
+
+        protected void gvFacturas_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Usuarios usuario = (Usuarios)Session["usuario"];
+            string rol = usuario.Rol;
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Busca los botones
+                Button btnEliminar = (Button)e.Row.FindControl("btnEliminar");
+                
+
+                // Muestra u oculta los botones según el tipo de usuario
+                if (rol.Trim().Equals("cliente"))
+                {
+                    btnEliminar.Visible = false;
+                }
+                else
+                {
+                    btnEliminar.Visible = true;
+                }
+                
             }
         }
     }

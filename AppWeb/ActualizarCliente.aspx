@@ -9,6 +9,10 @@
                 <asp:TextBox Required="true" ID="txtNombre" runat="server" CssClass="form-control" />
             </div>
             <div class="form-group mt-2">
+                <label for="txtNombre">Apellido</label>
+                <asp:TextBox Required="true" ID="txtApellido" runat="server" CssClass="form-control" />
+            </div>
+            <div class="form-group mt-2">
                 <label for="txtCedula">Cédula</label>
                 <asp:TextBox Required="true" ID="txtCedula" runat="server" CssClass="form-control" />
             </div>

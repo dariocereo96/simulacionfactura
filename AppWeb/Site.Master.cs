@@ -14,7 +14,25 @@ namespace AppWeb
         {
             if (Session["usuario"] != null)
             {
-                Usuarios usuarios = (Usuarios)Session["usuario"];
+                Usuarios usuario = (Usuarios)Session["usuario"];
+
+                lblUsuario.Text = usuario.NombreUsuario + " | " + usuario.Rol;
+
+                if (usuario.Rol.Trim().Equals("vendedor"))
+                {
+                    HyperLinkProductos.Visible = false;
+                    HyperLinkUsuarios.Visible = false;
+                    HyperLinkReportes.Visible = false;
+                    HyperLinkEmail.Visible = false;
+                }
+                else if (usuario.Rol.Trim().Equals("cliente"))
+                {
+                    HyperLinkProductos.Visible = false;
+                    HyperLinkUsuarios.Visible = false;
+                    HyperLinkClientes.Visible = false;
+                    HyperLinkReportes.Visible = false;
+                    HyperLinkEmail.Visible = false;
+                }
             }
             else
             {
